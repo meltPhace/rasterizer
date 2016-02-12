@@ -27,7 +27,16 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 app.use('/users', users);
 
-app.post('/upload', multer({ dest: './uploads/'}).single('image'), function(req,res){
+var storageOpts = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, './uploads');
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname);
+  }
+});
+
+app.post('/upload', multer({ storage: storageOpts }).single('image'), function(req,res){
     console.log(req.body); //form fields
     /* example output:
     { title: 'abc' }
@@ -43,6 +52,9 @@ app.post('/upload', multer({ dest: './uploads/'}).single('image'), function(req,
               path: 'uploads/436ec561793aa4dc475a88e84776b1b9',
               size: 277056 }
      */
+
+
+     
     res.status(204).end();
 });
 
