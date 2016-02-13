@@ -1,4 +1,5 @@
 define ([], function () {
+    
    var ajaxGet = function (url) {
         return new Promise(function (resolve, reject) {
             var xmlHttp = new XMLHttpRequest();
@@ -12,6 +13,7 @@ define ([], function () {
             };
             xmlHttp.send();
         });
-    };
+    }
+
     return ajaxGet;
 });
